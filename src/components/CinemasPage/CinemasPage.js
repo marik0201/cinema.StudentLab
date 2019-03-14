@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
+import Filter from "../Filter/Filter";
+import Cinemas from "../Cinemas/Cinemas"
+import "./style.scss";
 
- export default class CinemasPage extends Component {
-     render() {
-         return (
-             <>
-                hi
-             </>
-         )
-     }
- }
+ const CinemasPage = () =>
+ <div className="container__cinemasPage">
+    <Filter/>
+    <Cinemas/>
+ </div>
+ 
+
+export default CinemasPage
