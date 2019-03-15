@@ -10,3 +10,13 @@
     margin: 4% auto 0 auto;
     padding: 2%;
 }
+
+.MuiSelect-select-100 {
+    input {
+        width: 100% !important;
+    }
+}
+
+.MuiInput-underline-16:after {
+    border-bottom-color: #eb1c23 !important;
+}
