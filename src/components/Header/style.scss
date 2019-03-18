@@ -1,0 +1,43 @@
+$bgColor: #fff;
+$color: #eb1c23;
+
+
+header {
+    -webkit-box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
+    background: $bgColor;
+    min-height: 90px;
+    display: flex;
+}
+
+.logo {
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2%;
+    span {
+        font-size: 2em;
+        font-weight: bold;
+    }
+}
+
+.header__user {
+    flex-grow: 5;
+    padding: 2%;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    button {
+        background-color: $bgColor;
+        border: none;
+        font-size: 1.4em;
+        &:hover {
+            color: $color;
+            transition: .3 all ease;
+        }
+
+    }
+}
