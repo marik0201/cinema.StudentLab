@@ -4,7 +4,7 @@ import React, {Component} from 'react';
      render() {
          return (
              <>
-                hi
+                <h1>CinemasPage</h1>
              </>
          )
      }
