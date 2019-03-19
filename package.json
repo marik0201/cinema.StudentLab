@@ -1,20 +1,22 @@
 {
-  "name": "webpack-babel-react-loi-starter",
+  "name": "CinemaLab",
   "version": "1.0.0",
-  "description": "",
+  "description": "iTechArt Student Lab Project",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "start": "webpack-dev-server --output-public-path=/build/ --open"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mark Likhtar (marktechart@gmail.com)",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "autosuggest-highlight": "^3.1.1",
     "babel-polyfill": "^6.26.0",
     "prop-types": "^15.7.2",
+    "autoprefixer": "^9.5.0",
+    "postcss-loader": "^3.0.0",
     "react": "^16.8.4",
     "react-autosuggest": "^9.4.3",
     "react-dom": "^16.8.4",

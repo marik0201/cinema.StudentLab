@@ -6,22 +6,25 @@ export default class Header extends Component {
     state = {
         isAdmin: false,
         logIn: false,
-        userName: "Admin"
+        userName: "UserName"
     }
 
 
 
     render() {
-        const {logIn, userName} = this.state;
+        const {logIn, userName, isAdmin} = this.state;
         return(
         <header>
             <div className="logo">
-                <span>Tickets</span>
+            <span><Link to='/'>Tickets</Link></span>
             </div>
             <div className="header__user">
                 {logIn ? (
-                    <button>{userName}</button>
-                ):(<button>Войти</button>)}
+                     isAdmin ? (<Link to='/admin'>{userName}</Link>):
+
+                   (<Link to='/user'> {userName}</Link>)
+                ):(<Link to='/auth'>
+                Войти</Link>)}
             </div>
         </header>
         )
