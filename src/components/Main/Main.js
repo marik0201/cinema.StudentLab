@@ -7,7 +7,7 @@ import EditFilm from "../EditFilm/EditFilm";
 import EditSession from "../EditSession/EditSession";
 import EditUsers from "../EditUsers/EditUsers";
 import AdminPage from "../AdminPage/AdminPage";
-import Auth from "../Auth/Auth";
+import Auth from "../Auth/Auth"
 
 const Main = () => (
   <main>
