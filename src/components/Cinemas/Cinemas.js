@@ -12,10 +12,10 @@ import "./style.scss";
         axios
         .get("http://localhost:3000/api/films")
         .then(res => {
+            
             this.setState({
-                items: res.data.result.films
+                items: res.data.result
             })
-            console.log(this.state.items);
             
         })
     }

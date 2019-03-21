@@ -10,9 +10,7 @@ import "./style.scss";
                 <div className="img__container" style={{
                     backgroundImage: `url(${this.props.item.url})`,
                     backgroundSize: 'cover',
-                }}>
-                
-                </div>
+                }}/>
                 <div>
                 <h3>{this.props.item.name}</h3> 
                 <Button variant="contained">
