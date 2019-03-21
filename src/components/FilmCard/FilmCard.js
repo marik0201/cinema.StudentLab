@@ -8,14 +8,16 @@ import "./style.scss";
          return (
              <div className="card">
                 <div className="img__container" style={{
-                    backgroundImage: `url(https://pluggedin.ru/images/upload/1544451083.jpg)`,
+                    backgroundImage: `url(${this.props.item.url})`,
                     backgroundSize: 'cover',
                 }}>
                 
                 </div>
                 <div>
-                <h3>Film</h3>
-                
+                <h3>{this.props.item.name}</h3> 
+                <Button variant="contained">
+                    Заказать
+                </Button>               
                 </div>
              </div>
          )
