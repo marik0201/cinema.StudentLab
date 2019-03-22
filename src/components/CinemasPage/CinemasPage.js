@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
+import Cinemas from "../Cinemas/Cinemas";
+import "./style.scss";
 
- export default class CinemasPage extends Component {
-     render() {
-         return (
-             <>
-                <h1>CinemasPage</h1>
-             </>
-         )
-     }
- }
+const CinemasPage = () => (
+  <div className="container__cinemasPage">
+    <Cinemas />
+  </div>
+);
+
+export default CinemasPage;

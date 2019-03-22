@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
- export default class EditFilm extends Component {
-     render() {
-         return (
-             <>
-                <h1>EditFilm</h1>
-             </>
-         )
-     }
- }
+export default class EditFilm extends Component {
+  render() {
+    return (
+      <>
+        <h1>EditFilm</h1>
+      </>
+    );
+  }
+}

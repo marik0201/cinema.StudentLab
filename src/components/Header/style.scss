@@ -3,13 +3,12 @@ $color: #eb1c23;
 
 
 header {
-    -webkit-box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
-    box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
     background: $bgColor;
-    min-height: 90px;
+    max-height: 10vh;
     display: flex;
 }
+
 
 .logo {
     flex-grow: 2;
