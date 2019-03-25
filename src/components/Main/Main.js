@@ -11,7 +11,7 @@ import AdminPage from "../AdminPage/AdminPage";
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path="/" component={CinemasPage} />
+      <Route  path="/" component={CinemasPage} />
       <Route exact path="/user" component={UserPage} />
       <Route exact path="/admin/cinema" component={EditCinema} />
       <Route exact path="/admin/films" component={EditFilm} />

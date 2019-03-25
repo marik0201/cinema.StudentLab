@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import "./style.scss";
+import { slugify } from "transliteration";
 
 export default class FilmCard extends Component {
   render() {
@@ -15,7 +17,7 @@ export default class FilmCard extends Component {
         />
         <div>
           <h3>{this.props.item.name}</h3>
-          <Button variant="contained">Заказать</Button>
+          <Button variant="contained"><Link to={`${slugify(this.props.item.name)}`}> Заказать </Link></Button>
         </div>
       </div>
     );
