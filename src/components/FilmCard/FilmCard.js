@@ -15,9 +15,12 @@ export default class FilmCard extends Component {
             backgroundSize: "cover"
           }}
         />
+
         <div>
           <h3>{this.props.item.name}</h3>
-          <Button variant="contained"><Link to={`${slugify(this.props.item.name)}`}> Заказать </Link></Button>
+          <Button variant="contained">
+            <Link to={`/${slugify(this.props.item.name)}`}> Заказать </Link>
+          </Button>
         </div>
       </div>
     );
