@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import "./style.scss";
-import { slugify } from "transliteration";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import './style.scss';
+import { slugify } from 'transliteration';
 
 export default class FilmCard extends Component {
   render() {
@@ -12,15 +12,15 @@ export default class FilmCard extends Component {
           className="img__container"
           style={{
             backgroundImage: `url(${this.props.item.url})`,
-            backgroundSize: "cover"
+            backgroundSize: 'cover'
           }}
         />
 
         <div>
           <h3>{this.props.item.name}</h3>
-          <Button variant="contained">
-            <Link to={`/${slugify(this.props.item.name)}`}> Заказать </Link>
-          </Button>
+          <Link to={`/film/${this.props.item.slugName}`}>
+            <Button variant="contained">Заказать</Button>
+          </Link>
         </div>
       </div>
     );

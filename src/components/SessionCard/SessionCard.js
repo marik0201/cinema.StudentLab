@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import "./style.scss";
+import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+import './style.scss';
 
 export default class SessionCard extends Component {
   render() {
     return (
       <div className="session__card">
         <div className="session__info">
-          {" "}
           <span>Время: </span>
           {this.props.item.time}
         </div>
