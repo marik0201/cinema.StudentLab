@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import FilmCard from '../FilmCard/FilmCard';
 import axios from 'axios';
+import FilmCard from '../FilmCard/FilmCard';
 import './style.scss';
 
 export default class Cinemas extends Component {
   state = {
-    items: []
+    items: [],
+    errorMessage: ''
   };
 
   componentDidMount() {
@@ -13,12 +14,17 @@ export default class Cinemas extends Component {
       this.setState({
         items: res.data.result
       });
+    }).catch( () => {
+      this.setState({
+        errorMessage: 'Ошибка сервера'
+      })
     });
   }
 
   render() {
     return (
       <div className="cinemas__container">
+      {this.state.errorMessage ? (<h2>{this.state.errorMessage}</h2>) : <></>}
         {this.state.items.map(item => (
           <FilmCard item={item} key={item._id} />
         ))}

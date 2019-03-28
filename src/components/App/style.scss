@@ -17,7 +17,8 @@ button {
 a {
   text-decoration: none;
   color: #000;
-  transition: .3s all ease;
+  transition: 0.3s all ease;
+
   &:hover {
     color: #eb1c23;
   }

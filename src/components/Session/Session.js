@@ -34,7 +34,7 @@ export default class Session extends Component {
         {this.state.errorMessage ? (<h2>{this.state.errorMessage}</h2>):(<></>)}
         <div className="container__cinemasPage">
           {this.state.sessions.map(item => (
-            <SessionCard item={item} filmName={this.state.filmName} key={item._id}/>
+            <SessionCard item={item} key={item._id}/>
           ))}
         </div>
       </>
