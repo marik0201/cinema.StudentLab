@@ -1,33 +1,42 @@
 .card {
-    width: 20%;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
-    margin: 0 4% 2% 3%;
-    height: 500px;
-    h3 {
-        text-align: center;
+  width: 20%;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+              0px 1px 1px 0px rgba(0, 0, 0, 0.14), 
+              0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  margin: 0 4% 2% 3%;
+  height: 500px;
+
+  a {
+    margin: 0 auto;
+    width: 60%;
+  }
+
+  h3 {
+    text-align: center;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+      width: 100%;
     }
-    div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        button {
-            width: 60%;
-            margin: 0 auto;
-        }
-    }
+  }
 }
 
 .img__container {
-    background-size: cover;
-    overflow: hidden;
-    height: 50px;
-    width: auto;
-    height: 70%;
+  background-size: cover;
+  overflow: hidden;
+  height: 50px;
+  width: auto;
+  height: 70%;
 
-    img {
-        height: 100%;
-        width: auto;
-    }
+  img {
+    height: 100%;
+    width: auto;
+  }
 }
