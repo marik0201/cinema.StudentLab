@@ -8,6 +8,8 @@ import EditSession from '../EditSession/EditSession';
 import EditUsers from '../EditUsers/EditUsers';
 import AdminPage from '../AdminPage/AdminPage';
 import Session from '../Session/Session';
+import Auth from '../Auth/Auth';
+
 
 const Main = () => (
   <main>
@@ -20,6 +22,7 @@ const Main = () => (
       <Route exact path="/admin/session" component={EditSession} />
       <Route exact path="/admin/users" component={EditUsers} />
       <Route exact path="/admin" component={AdminPage} />
+      <Route exact path="/auth" component={Auth} />
     </Switch>
   </main>
 );

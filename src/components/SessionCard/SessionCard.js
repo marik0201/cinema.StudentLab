@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
 import './style.scss';
 
 const currencies = [
@@ -40,7 +41,10 @@ export default class SessionCard extends Component {
     currency: 1,
     numberOfSeats: 1,
     name: '',
-    errorMessage: ''
+    errorMessage: '',
+    openSnack: false,
+    vertical: 'bottom',
+    horizontal: 'center',
   };
 
   handleClickOpen = () => {
@@ -61,12 +65,15 @@ export default class SessionCard extends Component {
       numberOfSeats: this.state.numberOfSeats,
       sessionId: this.props.item._id
     };
-    console.log(ticket);
 
     axios
       .post('http://localhost:3000/api/ticket', { ticket })
       .then(res => {
-        this.setState({ open: false });
+        this.setState({ open: false,
+        openSnack: true });
+        setTimeout(() => {this.setState({
+          openSnack:false
+        })}, 2000);
       })
       .catch(() => {
         this.setState({
@@ -82,6 +89,7 @@ export default class SessionCard extends Component {
   };
 
   render() {
+    const { vertical, horizontal, openSnack } = this.state;
     return (
       <div className="session__card">
         <div className="session__info">
@@ -154,6 +162,16 @@ export default class SessionCard extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={openSnack}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Билет заказан</span>}
+        />
+        
       </div>
     );
   }
