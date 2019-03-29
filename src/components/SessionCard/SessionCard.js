@@ -10,35 +10,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import './style.scss';
 
-const currencies = [
-  {
-    value: '1',
-    label: '1'
-  },
-  {
-    value: '2',
-    label: '2'
-  },
-  {
-    value: '3',
-    label: '3'
-  },
-  {
-    value: '4',
-    label: '4'
-  },
-  {
-    value: '5',
-    label: '5'
-  }
-];
+const numberOfSeats = [1, 2, 3, 4, 5];
 
 export default class SessionCard extends Component {
   state = {
     open: false,
     age: '',
     currency: 1,
-    numberOfSeats: 1,
+    selectedSeats: 1,
     name: '',
     errorMessage: ''
   };
@@ -58,10 +37,9 @@ export default class SessionCard extends Component {
   orderTicket = () => {
     const ticket = {
       name: this.state.name,
-      numberOfSeats: this.state.numberOfSeats,
+      numberOfSeats: this.state.selectedSeats,
       sessionId: this.props.item._id
     };
-    console.log(ticket);
 
     axios
       .post('http://localhost:3000/api/ticket', { ticket })
@@ -75,9 +53,9 @@ export default class SessionCard extends Component {
       });
   };
 
-  changeSeats = () => {
+  changeSelectedSeats = () => {
     this.setState({
-      numberOfSeats: value
+      selectedSeats: value
     });
   };
 
@@ -100,12 +78,8 @@ export default class SessionCard extends Component {
           Заказать билет
         </Button>
 
-        <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Заказать билет</DialogTitle>
+        <Dialog open={this.state.open} onClose={this.handleClose}>
+          <DialogTitle>Заказать билет</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Выберите нужное количество мест (не более 5) и введите ваше имя,
@@ -124,18 +98,18 @@ export default class SessionCard extends Component {
             <TextField
               id="standard-select-currency"
               select
-              value={this.state.numberOfSeats}
-              onChange={this.handleChange('numberOfSeats')}
+              value={this.state.selectedSeats}
+              onChange={this.handleChange('selectedSeats')}
               helperText="Количество мест"
               margin="normal"
             >
-              {currencies.map(option => (
+              {numberOfSeats.map(option => (
                 <MenuItem
-                  key={option.value}
-                  value={option.value}
-                  onChange={this.changeSeats}
+                  key={option}
+                  value={option}
+                  onChange={this.changeSelectedSeats}
                 >
-                  {option.label}
+                  {option}
                 </MenuItem>
               ))}
             </TextField>
