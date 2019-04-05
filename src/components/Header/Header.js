@@ -6,9 +6,18 @@ export default class Header extends Component {
   state = {
     isAdmin: false,
     logIn: false,
-    userName: 'UserName'
+    userName: ''
   };
 
+  componentWillMount = () => {
+    const userName = localStorage.getItem('userName');
+    userName ? this.setState({logIn: true, userName}) : this.setState({logIn: false})
+  }
+
+  componentWillReceiveProps = () => {
+    const userName = localStorage.getItem('userName');
+    userName ? this.setState({logIn: true, userName}) : this.setState({logIn: false})
+  }
   render() {
     const { logIn, userName, isAdmin } = this.state;
     return (

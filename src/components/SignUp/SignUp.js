@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 export default class SignUp extends Component {
   state = {
-      name: '',
-      login: '',
-      password: '',
-      repeatPasswod: ''
+    name: '',
+    login: '',
+    password: '',
+    repeatPasswod: ''
   };
 
   handleChange = name => event => {
@@ -15,14 +16,42 @@ export default class SignUp extends Component {
   };
 
   loginSubmit = () => {
-    console.log(this.state.login);
-    console.log(this.state.name);
-    console.log(this.state.password);
-    console.log(this.state.repeatPasswod);
-    
-    
-    
-    
+    const { name, login, password, repeatPasswod } = this.state;
+    !name || !login || !password || !repeatPasswod
+      ? (this.props.snackbar('Заполните все поля'),
+        this.setState({
+          name: '',
+          login: '',
+          password: '',
+          repeatPasswod: ''
+        }))
+      : password !== repeatPasswod
+      ? (this.props.snackbar('Пароли не совпадают'),
+        this.setState({
+          password: '',
+          repeatPasswod: ''
+        }))
+      : axios
+          .post('http://localhost:3000/api/signup', { name, login, password })
+          .then(res => {
+            this.props.snackbar(
+              'Вы зарегестрированы. Теперь можете войти на сайт'
+            );
+            this.setState({
+              name: '',
+              login: '',
+              password: '',
+              repeatPasswod: ''
+            });
+            this.props.action();
+          })
+          .catch(err => {
+            const error = err.response.data.errorMessages.join('; ');
+
+            err.response.data.errorMessages
+              ? this.props.snackbar(error)
+              : this.props.snackbar(err.response.data.message);
+          });
   };
 
   render() {
@@ -67,7 +96,9 @@ export default class SignUp extends Component {
           fullWidth
         />
         <div className="form__button__container">
-          <Button variant="contained" onClick={this.loginSubmit}>Зарегестрироваться</Button>
+          <Button variant="contained" onClick={this.loginSubmit}>
+            Зарегестрироваться
+          </Button>
           <br />
           <Button variant="contained" onClick={this.props.action}>
             Войти
