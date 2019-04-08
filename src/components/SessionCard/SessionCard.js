@@ -23,7 +23,7 @@ export default class SessionCard extends Component {
     name: '',
     snackMessage: '',
     vertical: 'bottom',
-    horizontal: 'center',
+    horizontal: 'center'
   };
 
   handleClickOpen = () => {
@@ -49,27 +49,33 @@ export default class SessionCard extends Component {
       .post('http://localhost:3000/api/ticket', { ticket })
       .then(res => {
         this.setState({
-          snackMessage: 'Билет заказан', 
+          snackMessage: 'Билет заказан',
           open: false,
           openSnack: true
         });
-        
-        setTimeout(() => 
-        this.setState(prev=>({
-          openSnack: false
-        })), 3000)
+
+        setTimeout(
+          () =>
+            this.setState(prev => ({
+              openSnack: false
+            })),
+          3000
+        );
       })
       .catch(() => {
         this.setState({
-          snackMessage: 'Не удалось заказать', 
+          snackMessage: 'Не удалось заказать',
           open: false,
           openSnack: true
         });
-        
-        setTimeout(() => 
-        this.setState(prev=>({
-          openSnack: false
-        })), 3000)
+
+        setTimeout(
+          () =>
+            this.setState({
+              openSnack: false
+            }),
+          3000
+        );
       });
   };
 
@@ -134,7 +140,6 @@ export default class SessionCard extends Component {
                 </MenuItem>
               ))}
             </TextField>
-            
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
@@ -150,7 +155,7 @@ export default class SessionCard extends Component {
           open={openSnack}
           onClose={this.handleClose}
           ContentProps={{
-            'aria-describedby': 'message-id',
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{this.state.snackMessage}</span>}
         />

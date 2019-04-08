@@ -17,41 +17,43 @@ export default class SignUp extends Component {
 
   loginSubmit = () => {
     const { name, login, password, repeatPasswod } = this.state;
-    !name || !login || !password || !repeatPasswod
-      ? (this.props.snackbar('Заполните все поля'),
+    if (!name || !login || !password || !repeatPasswod) {
+      this.props.snackbar('Заполните все поля'),
         this.setState({
           name: '',
           login: '',
           password: '',
           repeatPasswod: ''
-        }))
-      : password !== repeatPasswod
-      ? (this.props.snackbar('Пароли не совпадают'),
+        });
+    } else if (password !== repeatPasswod) {
+      this.props.snackbar('Пароли не совпадают'),
         this.setState({
           password: '',
           repeatPasswod: ''
-        }))
-      : axios
-          .post('http://localhost:3000/api/signup', { name, login, password })
-          .then(res => {
-            this.props.snackbar(
-              'Вы зарегестрированы. Теперь можете войти на сайт'
-            );
-            this.setState({
-              name: '',
-              login: '',
-              password: '',
-              repeatPasswod: ''
-            });
-            this.props.action();
-          })
-          .catch(err => {
-            const error = err.response.data.errorMessages.join('; ');
-
-            err.response.data.errorMessages
-              ? this.props.snackbar(error)
-              : this.props.snackbar(err.response.data.message);
+        });
+    } else {
+      axios
+        .post('http://localhost:3000/api/signup', { name, login, password })
+        .then(res => {
+          this.props.snackbar(
+            'Вы зарегестрированы. Теперь можете войти на сайт'
+          );
+          this.setState({
+            name: '',
+            login: '',
+            password: '',
+            repeatPasswod: ''
           });
+          this.props.action();
+        })
+        .catch(err => {
+          const error = err.response.data.errorMessages.join('; ');
+
+          err.response.data.errorMessages
+            ? this.props.snackbar(error)
+            : this.props.snackbar(err.response.data.message);
+        });
+    }
   };
 
   render() {

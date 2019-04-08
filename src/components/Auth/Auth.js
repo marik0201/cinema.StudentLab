@@ -41,10 +41,7 @@ export default class Auth extends Component {
             anchorOrigin={{ vertical, horizontal }}
             open={openSnack}
             onClose={this.handleClose}
-            ContentProps={{
-              'aria-describedby': 'message-id'
-            }}
-            message={<span id="message-id">{this.state.snackMessage}</span>}
+            message={<span>{this.state.snackMessage}</span>}
           />
         </div>
       </div>

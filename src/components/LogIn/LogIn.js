@@ -22,7 +22,6 @@ export default class LogIn extends Component {
           .then(res => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userName', res.data.userName);
-            localStorage.setItem('userLogin', res.data.userLogin);
             history.push('/');
           })
           .catch(res => {
