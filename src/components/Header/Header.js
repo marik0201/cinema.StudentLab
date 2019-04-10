@@ -29,14 +29,16 @@ export default class Header extends Component {
 
   componentWillMount = () => {
     const userName = localStorage.getItem('userName');
-    userName
+    const token = localStorage.getItem('token');
+    token
       ? this.setState({ logIn: true, userName })
       : this.setState({ logIn: false });
   };
 
   componentWillReceiveProps = () => {
     const userName = localStorage.getItem('userName');
-    userName
+    const token = localStorage.getItem('token');
+    token
       ? this.setState({ logIn: true, userName })
       : this.setState({ logIn: false });
   };
