@@ -9,6 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
+import history from '../../history';
 import './style.scss';
 
 const numberOfSeats = [1, 2, 3, 4, 5];
@@ -27,7 +28,8 @@ export default class SessionCard extends Component {
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    const token = localStorage.getItem('token');
+    token ? this.setState({ open: true }) : history.push('/auth');
   };
 
   handleClose = () => {
@@ -51,14 +53,15 @@ export default class SessionCard extends Component {
         this.setState({
           snackMessage: 'Билет заказан',
           open: false,
-          openSnack: true
+          openSnack: true,
+          name: ''
         });
 
         setTimeout(
           () =>
-            this.setState(prev => ({
+            this.setState({
               openSnack: false
-            })),
+            }),
           3000
         );
       })
@@ -116,7 +119,7 @@ export default class SessionCard extends Component {
               autoFocus
               margin="dense"
               id="name"
-              label="Ваше имя"
+              label="Введите ваше имя"
               value={this.state.name}
               onChange={this.handleChange('name')}
               type="email"
@@ -154,10 +157,7 @@ export default class SessionCard extends Component {
           anchorOrigin={{ vertical, horizontal }}
           open={openSnack}
           onClose={this.handleClose}
-          ContentProps={{
-            'aria-describedby': 'message-id'
-          }}
-          message={<span id="message-id">{this.state.snackMessage}</span>}
+          message={<span>{this.state.snackMessage}</span>}
         />
       </div>
     );

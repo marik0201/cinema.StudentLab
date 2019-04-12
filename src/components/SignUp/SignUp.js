@@ -47,10 +47,8 @@ export default class SignUp extends Component {
           this.props.action();
         })
         .catch(err => {
-          const error = err.response.data.errorMessages.join('; ');
-
           err.response.data.errorMessages
-            ? this.props.snackbar(error)
+            ? this.props.snackbar(err.response.data.errorMessages.join('; '))
             : this.props.snackbar(err.response.data.message);
         });
     }

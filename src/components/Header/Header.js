@@ -3,13 +3,19 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {
+  getLocalStorageItem,
+  deleteLocalStorageItem
+} from '../../Service/LocalStorage';
 import style from './style.scss';
 
 export default class Header extends Component {
   state = {
     isAdmin: false,
-    logIn: false,
-    userName: '',
+    logIn: getLocalStorageItem('token') ? true : false,
+    userName: getLocalStorageItem('userName')
+      ? getLocalStorageItem('userName')
+      : '',
     anchorEl: null
   };
 
@@ -23,25 +29,20 @@ export default class Header extends Component {
 
   logOut = () => {
     this.setState({ anchorEl: null });
-    localStorage.removeItem('token');
-    localStorage.removeItem('userName');
+    deleteLocalStorageItem('token');
+    deleteLocalStorageItem('userName');
   };
 
-  componentWillMount = () => {
-    const userName = localStorage.getItem('userName');
-    const token = localStorage.getItem('token');
-    token
-      ? this.setState({ logIn: true, userName })
-      : this.setState({ logIn: false });
+  componentDidUpdate = prevProps => {
+    if (this.props !== prevProps) {
+      const userName = getLocalStorageItem('userName');
+      const token = getLocalStorageItem('token');
+      token
+        ? this.setState({ logIn: true, userName })
+        : this.setState({ logIn: false });
+    }
   };
 
-  componentWillReceiveProps = () => {
-    const userName = localStorage.getItem('userName');
-    const token = localStorage.getItem('token');
-    token
-      ? this.setState({ logIn: true, userName })
-      : this.setState({ logIn: false });
-  };
   render() {
     const { logIn, userName, isAdmin, anchorEl } = this.state;
     return (
@@ -55,13 +56,7 @@ export default class Header extends Component {
           {logIn ? (
             isAdmin ? (
               <>
-                <Button
-                  aria-owns={anchorEl ? 'simple-menu' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                >
-                  {userName}
-                </Button>
+                <Button onClick={this.handleClick}>{userName}</Button>
                 <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
@@ -78,13 +73,7 @@ export default class Header extends Component {
               </>
             ) : (
               <>
-                <Button
-                  aria-owns={anchorEl ? 'simple-menu' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleClick}
-                >
-                  {userName}
-                </Button>
+                <Button onClick={this.handleClick}>{userName}</Button>
                 <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
