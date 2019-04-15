@@ -3,48 +3,40 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import {
-  getLocalStorageItem,
-  deleteLocalStorageItem
-} from '../../Service/LocalStorage';
+import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
 export default class Header extends Component {
   state = {
     isAdmin: false,
-    logIn: getLocalStorageItem('token') ? true : false,
-    userName: getLocalStorageItem('userName')
-      ? getLocalStorageItem('userName')
-      : '',
-    anchorEl: null
+    logIn: UserService.isLoggedIn(),
+    userName: UserService.getUserName() ? UserService.getUserName() : '',
+    menuAnchor: null
   };
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ menuAnchor: event.currentTarget.firstChild });
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ menuAnchor: null });
   };
 
   logOut = () => {
-    this.setState({ anchorEl: null });
-    deleteLocalStorageItem('token');
-    deleteLocalStorageItem('userName');
+    this.setState({ menuAnchor: null });
+    UserService.logout();
   };
 
   componentDidUpdate = prevProps => {
     if (this.props !== prevProps) {
-      const userName = getLocalStorageItem('userName');
-      const token = getLocalStorageItem('token');
-      token
-        ? this.setState({ logIn: true, userName })
+      UserService.isLoggedIn()
+        ? this.setState({ logIn: true, userName: UserService.getUserName() })
         : this.setState({ logIn: false });
     }
   };
 
   render() {
-    const { logIn, userName, isAdmin, anchorEl } = this.state;
+    const { logIn, userName, isAdmin, menuAnchor } = this.state;
     return (
       <header>
         <div className="logo">
@@ -59,8 +51,8 @@ export default class Header extends Component {
                 <Button onClick={this.handleClick}>{userName}</Button>
                 <Menu
                   id="simple-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
+                  anchorEl={menuAnchor}
+                  open={Boolean(menuAnchor)}
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>
@@ -76,8 +68,8 @@ export default class Header extends Component {
                 <Button onClick={this.handleClick}>{userName}</Button>
                 <Menu
                   id="simple-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
+                  anchorEl={menuAnchor}
+                  open={Boolean(menuAnchor)}
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>
