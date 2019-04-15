@@ -10,6 +10,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import history from '../../history';
+import {
+  getLocalStorageItem,
+  deleteLocalStorageItem
+} from '../../Service/LocalStorage';
 import './style.scss';
 
 const numberOfSeats = [1, 2, 3, 4, 5];
@@ -21,14 +25,17 @@ export default class SessionCard extends Component {
     age: '',
     currency: 1,
     selectedSeats: 1,
-    name: '',
+    telephone: '',
+    userName: getLocalStorageItem('userName')
+      ? getLocalStorageItem('userName')
+      : '',
     snackMessage: '',
     vertical: 'bottom',
     horizontal: 'center'
   };
 
   handleClickOpen = () => {
-    const token = localStorage.getItem('token');
+    const token = getLocalStorageItem('token');
     token ? this.setState({ open: true }) : history.push('/auth');
   };
 
@@ -42,13 +49,18 @@ export default class SessionCard extends Component {
 
   orderTicket = () => {
     const ticket = {
-      name: this.state.name,
+      name: getLocalStorageItem('userName'),
+      telephone: this.state.telephone,
       numberOfSeats: this.state.selectedSeats,
       sessionId: this.props.item._id
     };
 
     axios
-      .post('http://localhost:3000/api/ticket', { ticket })
+      .post('http://localhost:3000/api/ticket', { ticket },{
+      headers: {
+        "Authorization": "JWT " + getLocalStorageItem('token'),
+        'Content-Type': 'application/json'
+      }},)
       .then(res => {
         this.setState({
           snackMessage: 'Билет заказан',
@@ -65,13 +77,14 @@ export default class SessionCard extends Component {
           3000
         );
       })
-      .catch(() => {
+      .catch((err) => {
         this.setState({
           snackMessage: 'Не удалось заказать',
           open: false,
           openSnack: true
         });
-
+        console.log(err.response.data.errorMessages);
+        
         setTimeout(
           () =>
             this.setState({
@@ -118,10 +131,10 @@ export default class SessionCard extends Component {
             <TextField
               autoFocus
               margin="dense"
-              id="name"
-              label="Введите ваше имя"
-              value={this.state.name}
-              onChange={this.handleChange('name')}
+              id="telephone"
+              label="Введите ваш номер телефона в формате +375XXXXXXXXXX"
+              value={this.state.telephone}
+              onChange={this.handleChange('telephone')}
               type="email"
               fullWidth
             />
