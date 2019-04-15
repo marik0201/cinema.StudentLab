@@ -25,10 +25,6 @@ export default class SessionCard extends Component {
     age: '',
     currency: 1,
     selectedSeats: 1,
-    telephone: '',
-    userName: getLocalStorageItem('userName')
-      ? getLocalStorageItem('userName')
-      : '',
     snackMessage: '',
     vertical: 'bottom',
     horizontal: 'center'
@@ -49,8 +45,6 @@ export default class SessionCard extends Component {
 
   orderTicket = () => {
     const ticket = {
-      name: getLocalStorageItem('userName'),
-      telephone: this.state.telephone,
       numberOfSeats: this.state.selectedSeats,
       sessionId: this.props.item._id
     };
@@ -125,10 +119,10 @@ export default class SessionCard extends Component {
           <DialogTitle>Заказать билет</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Выберите нужное количество мест (не более 5) и введите ваше имя,
+              Выберите нужное количество мест (не более 5),
               чтобы заказать билет на фильм {this.props.filmName}
             </DialogContentText>
-            <TextField
+            {/* <TextField
               autoFocus
               margin="dense"
               id="telephone"
@@ -137,7 +131,7 @@ export default class SessionCard extends Component {
               onChange={this.handleChange('telephone')}
               type="email"
               fullWidth
-            />
+            /> */}
             <TextField
               id="standard-select-currency"
               select
