@@ -10,10 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import history from '../../history';
-import {
-  getLocalStorageItem,
-  deleteLocalStorageItem
-} from '../../Service/LocalStorage';
+import UserService from '../../Service/UserService.js';
 import './style.scss';
 
 const numberOfSeats = [1, 2, 3, 4, 5];
@@ -31,8 +28,8 @@ export default class SessionCard extends Component {
   };
 
   handleClickOpen = () => {
-    const token = getLocalStorageItem('token');
-    token ? this.setState({ open: true }) : history.push('/auth');
+    const isLoggedIn = UserService.isLoggedIn();
+    isLoggedIn ? this.setState({ open: true }) : history.push('/auth');
   };
 
   handleClose = () => {

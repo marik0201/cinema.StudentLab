@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
 import LogIn from '../LogIn/LogIn';
 import SignUp from '../SignUp/SignUp';
-import Snackbar from '@material-ui/core/Snackbar';
 import './style.scss';
 
 export default class Auth extends Component {
@@ -21,10 +21,13 @@ export default class Auth extends Component {
 
   openSnackbar = message => {
     this.setState({ snackMessage: message, openSnack: true });
-    setTimeout(() => 
+    setTimeout(
+      () =>
         this.setState({
           openSnack: false
-        }), 3000)
+        }),
+      3000
+    );
   };
 
   render() {
@@ -35,7 +38,7 @@ export default class Auth extends Component {
           {this.state.logIn ? (
             <LogIn action={this.toggleForm} snackbar={this.openSnackbar} />
           ) : (
-            <SignUp action={this.toggleForm} snackbar={this.openSnackbar}/>
+            <SignUp action={this.toggleForm} snackbar={this.openSnackbar} />
           )}
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
