@@ -8,6 +8,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
+import Snackbar from '@material-ui/core/Snackbar';
+import history from '../../history';
+import UserService from '../../Service/UserService.js';
 import './style.scss';
 
 const numberOfSeats = [1, 2, 3, 4, 5];
@@ -15,15 +18,19 @@ const numberOfSeats = [1, 2, 3, 4, 5];
 export default class SessionCard extends Component {
   state = {
     open: false,
+    openSnack: false,
     age: '',
     currency: 1,
     selectedSeats: 1,
     name: '',
-    errorMessage: ''
+    snackMessage: '',
+    vertical: 'bottom',
+    horizontal: 'center'
   };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    const isLoggedIn = UserService.isLoggedIn();
+    isLoggedIn ? this.setState({ open: true }) : history.push('/auth');
   };
 
   handleClose = () => {
@@ -44,12 +51,35 @@ export default class SessionCard extends Component {
     axios
       .post('http://localhost:3000/api/ticket', { ticket })
       .then(res => {
-        this.setState({ open: false });
+        this.setState({
+          snackMessage: 'Билет заказан',
+          open: false,
+          openSnack: true,
+          name: ''
+        });
+
+        setTimeout(
+          () =>
+            this.setState({
+              openSnack: false
+            }),
+          3000
+        );
       })
       .catch(() => {
         this.setState({
-          errorMessage: 'Не удалось заказать билет'
+          snackMessage: 'Не удалось заказать',
+          open: false,
+          openSnack: true
         });
+
+        setTimeout(
+          () =>
+            this.setState({
+              openSnack: false
+            }),
+          3000
+        );
       });
   };
 
@@ -60,6 +90,7 @@ export default class SessionCard extends Component {
   };
 
   render() {
+    const { vertical, horizontal, openSnack } = this.state;
     return (
       <div className="session__card">
         <div className="session__info">
@@ -89,7 +120,7 @@ export default class SessionCard extends Component {
               autoFocus
               margin="dense"
               id="name"
-              label="Ваше имя"
+              label="Введите ваше имя"
               value={this.state.name}
               onChange={this.handleChange('name')}
               type="email"
@@ -113,11 +144,6 @@ export default class SessionCard extends Component {
                 </MenuItem>
               ))}
             </TextField>
-            {this.state.errorMessage ? (
-              <span>{this.state.errorMessage}</span>
-            ) : (
-              <></>
-            )}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
@@ -128,6 +154,12 @@ export default class SessionCard extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={openSnack}
+          onClose={this.handleClose}
+          message={<span>{this.state.snackMessage}</span>}
+        />
       </div>
     );
   }
