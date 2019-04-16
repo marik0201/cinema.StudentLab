@@ -14,5 +14,5 @@ UserService.getUserName = () => {
 };
 
 UserService.isLoggedIn = () => {
-  return localStorage.getItem('token');
+  return localStorage.getItem('token') ? true : false;        
 };
