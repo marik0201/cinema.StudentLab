@@ -13,6 +13,10 @@ UserService.getUserName = () => {
   return localStorage.getItem('userName');
 };
 
+UserService.getToken = () => {
+  return localStorage.getItem('token');
+}
+
 UserService.isLoggedIn = () => {
   return localStorage.getItem('token') ? true : false;        
 };

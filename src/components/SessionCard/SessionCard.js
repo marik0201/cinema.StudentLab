@@ -22,6 +22,7 @@ export default class SessionCard extends Component {
     age: '',
     currency: 1,
     selectedSeats: 1,
+    name: '',
     snackMessage: '',
     vertical: 'bottom',
     horizontal: 'center'
@@ -49,7 +50,7 @@ export default class SessionCard extends Component {
     axios
       .post('http://localhost:3000/api/ticket', { ticket },{
       headers: {
-        "Authorization": "JWT " + getLocalStorageItem('token'),
+        "Authorization": "JWT " + UserService.getToken(),
         'Content-Type': 'application/json'
       }},)
       .then(res => {
@@ -74,8 +75,6 @@ export default class SessionCard extends Component {
           open: false,
           openSnack: true
         });
-        console.log(err.response.data.errorMessages);
-        
         setTimeout(
           () =>
             this.setState({
@@ -119,16 +118,6 @@ export default class SessionCard extends Component {
               Выберите нужное количество мест (не более 5),
               чтобы заказать билет на фильм {this.props.filmName}
             </DialogContentText>
-            {/* <TextField
-              autoFocus
-              margin="dense"
-              id="telephone"
-              label="Введите ваш номер телефона в формате +375XXXXXXXXXX"
-              value={this.state.telephone}
-              onChange={this.handleChange('telephone')}
-              type="email"
-              fullWidth
-            /> */}
             <TextField
               id="standard-select-currency"
               select
