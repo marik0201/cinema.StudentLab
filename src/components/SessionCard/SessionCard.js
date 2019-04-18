@@ -43,13 +43,21 @@ export default class SessionCard extends Component {
 
   orderTicket = () => {
     const ticket = {
-      name: this.state.name,
       numberOfSeats: this.state.selectedSeats,
       sessionId: this.props.item._id
     };
 
     axios
-      .post('http://localhost:3000/api/ticket', { ticket })
+      .post(
+        'http://localhost:3000/api/tickets',
+        { ticket },
+        {
+          headers: {
+            Authorization: 'JWT ' + UserService.getToken(),
+            'Content-Type': 'application/json'
+          }
+        }
+      )
       .then(res => {
         this.setState({
           snackMessage: 'Билет заказан',
@@ -66,13 +74,12 @@ export default class SessionCard extends Component {
           3000
         );
       })
-      .catch(() => {
+      .catch(err => {
         this.setState({
           snackMessage: 'Не удалось заказать',
           open: false,
           openSnack: true
         });
-
         setTimeout(
           () =>
             this.setState({
@@ -113,19 +120,9 @@ export default class SessionCard extends Component {
           <DialogTitle>Заказать билет</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Выберите нужное количество мест (не более 5) и введите ваше имя,
-              чтобы заказать билет на фильм {this.props.filmName}
+              Выберите нужное количество мест (не более 5), чтобы заказать билет
+              на фильм {this.props.filmName}
             </DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Введите ваше имя"
-              value={this.state.name}
-              onChange={this.handleChange('name')}
-              type="email"
-              fullWidth
-            />
             <TextField
               id="standard-select-currency"
               select

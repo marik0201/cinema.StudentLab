@@ -16,7 +16,7 @@ export default class LogIn extends Component {
 
     login && password
       ? axios
-          .post('http://localhost:3000/api/login', {
+          .post('http://localhost:3000/api/auth/login', {
             login,
             password
           })
