@@ -33,7 +33,7 @@ export default class SignUp extends Component {
         });
     } else {
       axios
-        .post('http://localhost:3000/api/signup', { name, login, password })
+        .post('http://localhost:3000/api/auth/signup', { name, login, password })
         .then(res => {
           this.props.snackbar(
             'Вы зарегестрированы. Теперь можете войти на сайт'
