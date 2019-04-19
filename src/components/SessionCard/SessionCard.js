@@ -48,11 +48,16 @@ export default class SessionCard extends Component {
     };
 
     axios
-      .post('http://localhost:3000/api/ticket', { ticket },{
-      headers: {
-        "Authorization": "JWT " + UserService.getToken(),
-        'Content-Type': 'application/json'
-      }},)
+    .post(
+      'http://localhost:3000/api/tickets',
+      { ticket },
+      {
+        headers: {
+          Authorization: 'JWT ' + UserService.getToken(),
+          'Content-Type': 'application/json'
+        }
+      }
+    )
       .then(res => {
         this.setState({
           snackMessage: 'Билет заказан',

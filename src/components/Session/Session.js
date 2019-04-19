@@ -23,7 +23,9 @@ export default class Session extends Component {
       .catch(res => {
         this.setState({
           errorMessage: 'Ошибка сервера'
-        })
+        });
+        console.log(res.response);
+        
       });
   }
 

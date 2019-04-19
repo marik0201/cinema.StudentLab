@@ -13,6 +13,10 @@ UserService.getUserName = () => {
   return localStorage.getItem('userName');
 };
 
+UserService.setNewName = (newName) => {
+  localStorage.setItem('userName', newName);
+}
+
 UserService.getToken = () => {
   return localStorage.getItem('token');
 }
