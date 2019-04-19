@@ -8,7 +8,7 @@ export default class Session extends Component {
     filmSlugName: this.props.match.params.film,
     sessions: [],
     filmName: '',
-    errorMessage:''
+    errorMessage: ''
   };
 
   componentWillMount() {
@@ -24,8 +24,6 @@ export default class Session extends Component {
         this.setState({
           errorMessage: 'Ошибка сервера'
         });
-        console.log(res.response);
-        
       });
   }
 
@@ -33,10 +31,14 @@ export default class Session extends Component {
     return (
       <>
         <h2>Фильм: {this.state.filmName}</h2>
-        {this.state.errorMessage ? (<h2>{this.state.errorMessage}</h2>):(<></>)}
+        {this.state.errorMessage ? <h2>{this.state.errorMessage}</h2> : <></>}
         <div className="container__cinemasPage">
           {this.state.sessions.map(item => (
-            <SessionCard item={item} filmName={this.state.filmName} key={item._id}/>
+            <SessionCard
+              item={item}
+              filmName={this.state.filmName}
+              key={item._id}
+            />
           ))}
         </div>
       </>
