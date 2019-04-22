@@ -24,8 +24,6 @@ export default class SessionCard extends Component {
     selectedSeats: 1,
     name: '',
     snackMessage: '',
-    vertical: 'bottom',
-    horizontal: 'center'
   };
 
   handleClickOpen = () => {
@@ -97,7 +95,7 @@ export default class SessionCard extends Component {
   };
 
   render() {
-    const { vertical, horizontal, openSnack } = this.state;
+    const { openSnack } = this.state;
     return (
       <div className="session__card">
         <div className="session__info">
@@ -152,7 +150,7 @@ export default class SessionCard extends Component {
           </DialogActions>
         </Dialog>
         <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center',}}
           open={openSnack}
           onClose={this.handleClose}
           message={<span>{this.state.snackMessage}</span>}

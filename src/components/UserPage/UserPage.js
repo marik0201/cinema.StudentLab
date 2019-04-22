@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import UserTickets from '../UserTickets/UserTickets';
+import UserInfo from '../UserInfo/UserInfo';
 import axios from 'axios';
 import history from '../../history';
 import style from './style.scss';
 
 export default class UserPage extends Component {
   render() {
-    return <h1>UserPage</h1>;
+    return (
+      <div className='userPage__container'>
+        <UserTickets/>
+        <UserInfo/>
+      </div>
+      )
   }
 }
