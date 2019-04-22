@@ -11,8 +11,6 @@ export default class UserInfo extends Component {
   state = {
     newName: '',
     snackMessage: '',
-    vertical: 'bottom',
-    horizontal: 'center',
     openSnack: false
   };
 
@@ -37,54 +35,58 @@ export default class UserInfo extends Component {
 
   changeInfo = () => {
     const { newName } = this.state;
-    !newName
-      ? this.snack('Заполните поле')
-      : axios
-          .put(
-            'http://localhost:3000/api/user',
-            { newName },
-            {
-              headers: {
-                Authorization: 'JWT ' + UserService.getToken(),
-                'Content-Type': 'application/json'
-              }
+    if (!newName) {
+      this.snack('Заполните поле');
+    } else {
+      axios
+        .put(
+          'http://localhost:3000/api/user',
+          { newName },
+          {
+            headers: {
+              Authorization: 'JWT ' + UserService.getToken(),
+              'Content-Type': 'application/json'
             }
-          )
-          .then(() => {
-            this.snack('Имя изменено');
-            UserService.setNewName(newName);
-          })
-          .catch(err => {
-            err.response.status === 401
-              ? history.push('/auth')
-              : this.snack('Не удалось изменить имя');
-          });
+          }
+        )
+        .then(() => {
+          this.snack('Имя изменено');
+          UserService.setNewName(newName);
+        })
+        .catch(err => {
+          err.response.status === 401
+            ? history.push('/auth')
+            : this.snack('Не удалось изменить имя');
+        });
+    }
   };
 
   changePassword = () => {
     const { oldPassword, newPassword } = this.state;
 
-    !oldPassword || !newPassword
-      ? this.snack('Заполните поля')
-      : axios
-          .post(
-            'http://localhost:3000/api/auth/changepassword',
-            { oldPassword, newPassword },
-            {
-              headers: {
-                Authorization: 'JWT ' + UserService.getToken(),
-                'Content-Type': 'application/json'
-              }
+    if (!oldPassword || !newPassword) {
+      this.snack('Заполните поля');
+    } else {
+      axios
+        .post(
+          'http://localhost:3000/api/auth/changepassword',
+          { oldPassword, newPassword },
+          {
+            headers: {
+              Authorization: 'JWT ' + UserService.getToken(),
+              'Content-Type': 'application/json'
             }
-          )
-          .then(() => {
-            this.snack('Пароль изменен');
-          })
-          .catch(err => {
-            err.response.status === 401
-              ? history.push('/auth')
-              : this.snack(err.response.data.message);
-          });
+          }
+        )
+        .then(() => {
+          this.snack('Пароль изменен');
+        })
+        .catch(err => {
+          err.response.status === 401
+            ? history.push('/auth')
+            : this.snack(err.response.data.message);
+        });
+    }
   };
 
   handleChange = name => event => {
@@ -92,7 +94,7 @@ export default class UserInfo extends Component {
   };
 
   render() {
-    const { vertical, horizontal, openSnack } = this.state;
+    const { openSnack } = this.state;
     return (
       <div className="userInfo__container">
         <div className="userInfo__card">
@@ -141,7 +143,7 @@ export default class UserInfo extends Component {
           </Button>
         </div>
         <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center',}}
           open={openSnack}
           onClose={this.handleClose}
           message={<span>{this.state.snackMessage}</span>}

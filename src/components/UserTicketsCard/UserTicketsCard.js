@@ -8,8 +8,6 @@ import style from './style.scss';
 export default class UserTickets extends Component {
   state = {
     snackMessage: '',
-    vertical: 'bottom',
-    horizontal: 'center',
     openSnack: false
   };
 
@@ -60,7 +58,7 @@ export default class UserTickets extends Component {
         filmId: { name }
       }
     } = this.props.item;
-    const { vertical, horizontal, openSnack } = this.state;
+    const { openSnack } = this.state;
     return (
       <div className="userTicketsCard__container">
         <div className="filmName">
@@ -80,7 +78,7 @@ export default class UserTickets extends Component {
           <></>
         )}
         <Snackbar
-          anchorOrigin={{ vertical, horizontal }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center',}}
           open={openSnack}
           onClose={this.handleClose}
           message={<span>{this.state.snackMessage}</span>}
