@@ -46,16 +46,16 @@ export default class SessionCard extends Component {
     };
 
     axios
-    .post(
-      'http://localhost:3000/api/tickets',
-      { ticket },
-      {
-        headers: {
-          Authorization: 'JWT ' + UserService.getToken(),
-          'Content-Type': 'application/json'
+      .post(
+        'http://localhost:3000/api/tickets',
+        { ticket },
+        {
+          headers: {
+            Authorization: 'JWT ' + UserService.getToken(),
+            'Content-Type': 'application/json'
+          }
         }
-      }
-    )
+      )
       .then(res => {
         this.setState({
           snackMessage: 'Билет заказан',
@@ -72,7 +72,7 @@ export default class SessionCard extends Component {
           3000
         );
       })
-      .catch((err) => {
+      .catch(err => {
         this.setState({
           snackMessage: 'Не удалось заказать',
           open: false,
@@ -118,8 +118,8 @@ export default class SessionCard extends Component {
           <DialogTitle>Заказать билет</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Выберите нужное количество мест (не более 5),
-              чтобы заказать билет на фильм {this.props.filmName}
+              Выберите нужное количество мест (не более 5), чтобы заказать билет
+              на фильм {this.props.filmName}
             </DialogContentText>
             <TextField
               id="standard-select-currency"
