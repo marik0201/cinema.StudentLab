@@ -8,7 +8,7 @@ import style from './style.scss';
 
 export default class Header extends Component {
   state = {
-    isAdmin: false,
+    isAdmin: true,
     logIn: UserService.isLoggedIn(),
     userName: UserService.getUserName() ? UserService.getUserName() : '',
     menuAnchor: null

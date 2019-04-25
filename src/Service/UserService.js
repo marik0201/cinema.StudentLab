@@ -1,8 +1,9 @@
 export default class UserService {}
 
-UserService.login = (token, userName) => {
+UserService.login = (token, userName, isAdmin) => {
   localStorage.setItem('token', token);
   localStorage.setItem('userName', userName);
+  localStorage.setItem('isAdmin', isAdmin);
 };
 UserService.logout = () => {
   localStorage.removeItem('token');
