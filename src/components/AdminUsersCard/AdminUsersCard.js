@@ -25,6 +25,7 @@ export default class AdminUsersCard extends Component {
       })
       .then(() => {
         this.snack('Пользователь удален');
+        this.props.getUsers();
       })
       .catch(err => {
         this.snack('Не удалось удалить');
@@ -33,20 +34,26 @@ export default class AdminUsersCard extends Component {
 
   changeRole = () => {
     axios
-      .post(`http://localhost:3000/api/admin/users/changerole/${this.props.item._id}`,{}, {
-        headers: {
-          Authorization: 'JWT ' + UserService.getToken(),
-          'Content-Type': 'application/json'
+      .post(
+        `http://localhost:3000/api/admin/users/changerole/${
+          this.props.item._id
+        }`,
+        {},
+        {
+          headers: {
+            Authorization: 'JWT ' + UserService.getToken(),
+            'Content-Type': 'application/json'
+          }
         }
-      })
+      )
       .then(() => {
         this.snack('Статус пользователя изменён');
+        this.props.getUsers();
       })
       .catch(err => {
         this.snack('Не удалось изменить статус');
       });
   };
-
 
   snack = message => {
     this.setState({
@@ -61,26 +68,6 @@ export default class AdminUsersCard extends Component {
         }),
       3000
     );
-  };
-
-  cancelTicket = () => {
-    axios
-      .post(
-        `http://localhost:3000/api/tickets/${this.props.item._id}/cancel`,
-        {},
-        {
-          headers: {
-            Authorization: 'JWT ' + UserService.getToken(),
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      .then(res => {
-        this.snack('Билет отменён');
-      })
-      .catch(err => {
-        this.snack('Не удалось отменить билет');
-      });
   };
 
   render() {

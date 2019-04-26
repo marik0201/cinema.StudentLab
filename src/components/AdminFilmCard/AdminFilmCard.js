@@ -49,6 +49,7 @@ export default class AdminFilmCard extends Component {
         .then(() => {
           this.props.snackbar('Фильм изменен');
           this.setState({ open: false });
+          this.props.getFilms();
         })
         .catch(err => {
           this.props.snackbar('Не удалось изменить');
@@ -68,6 +69,7 @@ export default class AdminFilmCard extends Component {
       })
       .then(() => {
         this.props.snackbar('Фильм удален');
+        this.props.getFilms();
       })
       .catch(err => {
         this.props.snackbar('Не удалось удалить');
@@ -100,7 +102,7 @@ export default class AdminFilmCard extends Component {
             <DialogTitle>Изменить фильм</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Заполните поля для добавления фильма
+                Заполните поля для изменения фильма
               </DialogContentText>
               <TextField
                 id="name"

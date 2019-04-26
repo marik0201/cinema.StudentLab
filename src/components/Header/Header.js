@@ -8,7 +8,7 @@ import style from './style.scss';
 
 export default class Header extends Component {
   state = {
-    isAdmin: true,
+    isAdmin: UserService.isAdmin(),
     logIn: UserService.isLoggedIn(),
     userName: UserService.getUserName() ? UserService.getUserName() : '',
     menuAnchor: null
@@ -30,7 +30,11 @@ export default class Header extends Component {
   componentDidUpdate = prevProps => {
     if (this.props !== prevProps) {
       UserService.isLoggedIn()
-        ? this.setState({ logIn: true, userName: UserService.getUserName() })
+        ? this.setState({
+            logIn: true,
+            userName: UserService.getUserName(),
+            isAdmin: UserService.isAdmin()
+          })
         : this.setState({ logIn: false });
     }
   };
@@ -58,7 +62,7 @@ export default class Header extends Component {
                   <MenuItem onClick={this.handleClose}>
                     <Link to="/admin"> Профиль </Link>
                   </MenuItem>
-                  <MenuItem onClick={this.handleClose}>
+                  <MenuItem onClick={this.logOut}>
                     <Link to="/"> Выйти </Link>
                   </MenuItem>
                 </Menu>

@@ -7,28 +7,31 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItem from '@material-ui/core/MenuItem';
+import {
+  MuiPickersUtilsProvider,
+  TimePicker,
+  DatePicker
+} from 'material-ui-pickers';
 import Snackbar from '@material-ui/core/Snackbar';
 import history from '../../history';
 import UserService from '../../Service/UserService.js';
 import './style.scss';
 
-const numberOfSeats = [1, 2, 3, 4, 5];
-
-export default class SessionCard extends Component {
+export default class AdminSessionCard extends Component {
   state = {
     open: false,
     openSnack: false,
-    age: '',
-    currency: 1,
-    selectedSeats: 1,
-    name: '',
+    cinema: this.props.item.cinema,
+    time: new Date(this.props.item.time).toISOString().slice(0, 16),
     snackMessage: ''
   };
 
   handleClickOpen = () => {
-    const isLoggedIn = UserService.isLoggedIn();
-    isLoggedIn ? this.setState({ open: true }) : history.push('/auth');
+    this.setState({ open: true });
+  };
+
+  handleDateChange = date => {
+    this.setState({ selectedDate: date });
   };
 
   handleClose = () => {
@@ -49,16 +52,38 @@ export default class SessionCard extends Component {
     return `${year}-${month}-${date} ${hours}:${minutes}`;
   };
 
-  orderTicket = () => {
-    const ticket = {
-      numberOfSeats: this.state.selectedSeats,
-      sessionId: this.props.item._id
-    };
+  editSession = () => {
+    const { cinema, time } = this.state;
 
+    if (cinema && time) {
+      axios
+        .put(
+          `http://localhost:3000/api/admin/sessions/${this.props.item._id}`,
+          { time, cinema },
+          {
+            headers: {
+              Authorization: 'JWT ' + UserService.getToken(),
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then(() => {
+          this.props.snackbar('Сеанс изменен');
+          this.setState({ open: false });
+          this.props.getSessions();
+        })
+        .catch(err => {
+          this.props.snackbar('Не удалось изменить');
+        });
+    } else {
+      this.props.snackbar('Заполните поля');
+    }
+  };
+
+  deleteSession = () => {
     axios
-      .post(
-        'http://localhost:3000/api/tickets',
-        { ticket },
+      .delete(
+        `http://localhost:3000/api/admin/sessions/${this.props.item._id}`,
         {
           headers: {
             Authorization: 'JWT ' + UserService.getToken(),
@@ -66,42 +91,13 @@ export default class SessionCard extends Component {
           }
         }
       )
-      .then(res => {
-        this.setState({
-          snackMessage: 'Билет заказан',
-          open: false,
-          openSnack: true,
-          name: ''
-        });
-
-        setTimeout(
-          () =>
-            this.setState({
-              openSnack: false
-            }),
-          3000
-        );
+      .then(() => {
+        this.props.snackbar('Сеанс удален');
+        this.props.getSessions();
       })
       .catch(err => {
-        this.setState({
-          snackMessage: 'Не удалось заказать',
-          open: false,
-          openSnack: true
-        });
-        setTimeout(
-          () =>
-            this.setState({
-              openSnack: false
-            }),
-          3000
-        );
+        this.props.snackbar('Не удалось удалить');
       });
-  };
-
-  changeSelectedSeats = () => {
-    this.setState({
-      selectedSeats: value
-    });
   };
 
   render() {
@@ -120,42 +116,53 @@ export default class SessionCard extends Component {
           <span>Свободных мест: </span>
           {this.props.item.emptySeats}
         </div>
-        <Button variant="contained" onClick={this.handleClickOpen}>
-          Заказать билет
+        <Button
+          variant="contained"
+          className="sessionCard__button"
+          onClick={this.handleClickOpen}
+        >
+          Изменить сеанс
+        </Button>
+        <Button
+          variant="contained"
+          className="sessionCard__button"
+          onClick={this.deleteSession}
+        >
+          Удалить сеанс
         </Button>
 
         <Dialog open={this.state.open} onClose={this.handleClose}>
-          <DialogTitle>Заказать билет</DialogTitle>
+          <DialogTitle>Изменить сеанс</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Выберите нужное количество мест (не более 5), чтобы заказать билет
-              на фильм {this.props.filmName}
+              Заполните поля для изменения сеанса
             </DialogContentText>
             <TextField
-              id="standard-select-currency"
-              select
-              value={this.state.selectedSeats}
-              onChange={this.handleChange('selectedSeats')}
-              helperText="Количество мест"
+              id="name"
+              label="Название кинотетра"
+              type="search"
               margin="normal"
-            >
-              {numberOfSeats.map(option => (
-                <MenuItem
-                  key={option}
-                  value={option}
-                  onChange={this.changeSelectedSeats}
-                >
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
+              value={this.state.cinema}
+              onChange={this.handleChange('cinema')}
+              fullWidth
+            />
+            <TextField
+              id="datetime-local"
+              label="Next appointment"
+              type="datetime-local"
+              defaultValue={this.state.time}
+              onChange={this.handleChange('time')}
+              InputLabelProps={{
+                shrink: true
+              }}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Отмена
             </Button>
-            <Button onClick={this.orderTicket} color="primary">
-              Заказать
+            <Button color="primary" onClick={this.editSession}>
+              Изменить
             </Button>
           </DialogActions>
         </Dialog>

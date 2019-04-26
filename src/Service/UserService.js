@@ -8,6 +8,7 @@ UserService.login = (token, userName, isAdmin) => {
 UserService.logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userName');
+  localStorage.removeItem('isAdmin');
 };
 
 UserService.getUserName = () => {
@@ -20,6 +21,10 @@ UserService.setNewName = (newName) => {
 
 UserService.getToken = () => {
   return localStorage.getItem('token');
+}
+
+UserService.isAdmin = () => {
+   return localStorage.getItem('isAdmin') === 'true' ? true : false;  
 }
 
 UserService.isLoggedIn = () => {

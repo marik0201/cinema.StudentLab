@@ -52,6 +52,7 @@ export default class AdminFilms extends Component {
       .then(() => {
         this.snack('Фильм добавлен');
         this.setState({ open: false });
+        this.getFilms();
       })
       .catch(err => {
         this.snack('Не удалось добавить');
@@ -59,7 +60,7 @@ export default class AdminFilms extends Component {
       });
   };
 
-  componentDidMount() {
+  getFilms = () => {
     axios
       .get('http://localhost:3000/api/films')
       .then(res => {
@@ -72,6 +73,9 @@ export default class AdminFilms extends Component {
           errorMessage: 'Ошибка сервера'
         });
       });
+  };
+  componentDidMount() {
+    this.getFilms();
   }
 
   snack = message => {
@@ -98,7 +102,12 @@ export default class AdminFilms extends Component {
             <AddIcon />
           </Fab>
           {this.state.films.map(item => (
-            <AdminFilmCard item={item} snackbar={this.snack} key={item._id} />
+            <AdminFilmCard
+              item={item}
+              snackbar={this.snack}
+              getFilms={this.getFilms}
+              key={item._id}
+            />
           ))}
         </div>
         <Dialog open={this.state.open} onClose={this.handleClose}>

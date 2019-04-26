@@ -14,7 +14,7 @@ export default class AdminUsers extends Component {
     users: []
   };
 
-  componentDidMount = () => {
+  getUsers = () => {
     axios
       .get('http://localhost:3000/api/admin/users', {
         headers: {
@@ -28,13 +28,21 @@ export default class AdminUsers extends Component {
         });
       });
   };
-  
+
+  componentDidMount = () => {
+    this.getUsers();
+  };
+
   render() {
     return (
       <div>
-        <div className='userCard__container'>
-        {this.state.users.map(item => (
-            <AdminUsersCard item={item} key={item._id} />
+        <div className="userCard__container">
+          {this.state.users.map(item => (
+            <AdminUsersCard
+              item={item}
+              getUsers={this.getUsers}
+              key={item._id}
+            />
           ))}
         </div>
       </div>
