@@ -9,19 +9,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from '@material-ui/core/Snackbar';
-import { withStyles } from '@material-ui/core/styles';
 
-import UserService from '../../Service/UserService.js';
 import './style.scss';
 
-const styles = {
-  root: {
-    width: '80%',
-    margin: '2% auto' 
-  }
-};
-
-class AdminSessionCard extends Component {
+export default class AdminSessionCard extends Component {
   state = {
     open: false,
     openSnack: false,
@@ -63,7 +54,6 @@ class AdminSessionCard extends Component {
 
   render() {
     const { openSnack } = this.state;
-    const { classes } = this.props;
     return (
       <div className="session__card">
         <div className="session__info">
@@ -80,14 +70,14 @@ class AdminSessionCard extends Component {
         </div>
         <Button
           variant="contained"
-          classes = {{ root: classes.root }}
+          className="sessionCard__button"
           onClick={this.handleClickOpen}
         >
           Изменить сеанс
         </Button>
         <Button
           variant="contained"
-          classes = {{ root: classes.root }}
+          className="sessionCard__button"
           onClick={this.deleteSession}
         >
           Удалить сеанс
@@ -134,5 +124,3 @@ class AdminSessionCard extends Component {
     );
   }
 }
-
-export default withStyles(styles)(AdminSessionCard);
