@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 import UserService from '../../Service/UserService.js';
 import history from '../../history';
 
@@ -21,7 +22,7 @@ export default class LogIn extends Component {
             password
           })
           .then(res => {
-            UserService.login(res.data.token, res.data.userName);
+            UserService.login(res.data.token, res.data.userName, res.data.isAdmin);
             history.push('/');
           })
           .catch(res => {

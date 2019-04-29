@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import SessionCard from '../SessionCard/SessionCard';
 import './style.scss';
 

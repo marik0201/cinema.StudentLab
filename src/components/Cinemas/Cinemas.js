@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import FilmCard from '../FilmCard/FilmCard';
 import './style.scss';
 
@@ -13,7 +14,7 @@ export default class Cinemas extends Component {
     axios.get('http://localhost:3000/api/films').then(res => {
       this.setState({
         items: res.data.result
-      });
+      });      
     }).catch( () => {
       this.setState({
         errorMessage: 'Ошибка сервера'

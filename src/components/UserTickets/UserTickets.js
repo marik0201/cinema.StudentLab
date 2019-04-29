@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import UserTicketsCard from '../UserTicketsCard/UserTicketsCard';
 import UserService from '../../Service/UserService.js';
-import history from '../../history';
 import style from './style.scss';
 
 export default class UserTickets extends Component {

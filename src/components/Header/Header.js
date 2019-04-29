@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
 export default class Header extends Component {
   state = {
-    isAdmin: false,
+    isAdmin: UserService.isAdmin(),
     logIn: UserService.isLoggedIn(),
     userName: UserService.getUserName() ? UserService.getUserName() : '',
     menuAnchor: null
@@ -30,7 +31,11 @@ export default class Header extends Component {
   componentDidUpdate = prevProps => {
     if (this.props !== prevProps) {
       UserService.isLoggedIn()
-        ? this.setState({ logIn: true, userName: UserService.getUserName() })
+        ? this.setState({
+            logIn: true,
+            userName: UserService.getUserName(),
+            isAdmin: UserService.isAdmin()
+          })
         : this.setState({ logIn: false });
     }
   };
@@ -58,7 +63,7 @@ export default class Header extends Component {
                   <MenuItem onClick={this.handleClose}>
                     <Link to="/admin"> Профиль </Link>
                   </MenuItem>
-                  <MenuItem onClick={this.handleClose}>
+                  <MenuItem onClick={this.logOut}>
                     <Link to="/"> Выйти </Link>
                   </MenuItem>
                 </Menu>

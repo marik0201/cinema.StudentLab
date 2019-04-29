@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
+
 import history from '../../history';
 import UserService from '../../Service/UserService.js';
 import './style.scss';
@@ -23,7 +25,7 @@ export default class SessionCard extends Component {
     currency: 1,
     selectedSeats: 1,
     name: '',
-    snackMessage: '',
+    snackMessage: ''
   };
 
   handleClickOpen = () => {
@@ -37,6 +39,11 @@ export default class SessionCard extends Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+  };
+
+  getDate = () => {
+    moment.locale('ru');
+    return `${moment(this.props.item.time).format('llll')}`;
   };
 
   orderTicket = () => {
@@ -100,7 +107,7 @@ export default class SessionCard extends Component {
       <div className="session__card">
         <div className="session__info">
           <span>Время: </span>
-          {this.props.item.time}
+          {this.getDate()}
         </div>
         <div className="session__info">
           <span>Кинотеатр: </span>
@@ -150,7 +157,7 @@ export default class SessionCard extends Component {
           </DialogActions>
         </Dialog>
         <Snackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center',}}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={openSnack}
           onClose={this.handleClose}
           message={<span>{this.state.snackMessage}</span>}
