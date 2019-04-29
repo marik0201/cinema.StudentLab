@@ -11,22 +11,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
 
 import AdminSessionCard from '../AdminSessionCard/AdminSessionCard';
 import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
-const filmNames = [];
-const styles = {
-  root: {
-    background: '#eb1c23',
-    position: 'absolute',
-    left: '10px'
-  }
-};
+let filmNames = [];
 
-class AdminSessions extends Component {
+export default class AdminSessions extends Component {
   state = {
     sessions: [],
     snackMessage: '',
@@ -168,6 +160,10 @@ class AdminSessions extends Component {
     this.getFilmsNames();
   }
 
+  componentWillUnmount = () => {
+    filmNames = [];
+  };
+
   snack = message => {
     this.setState({ snackMessage: message, openSnack: true });
     setTimeout(
@@ -181,13 +177,12 @@ class AdminSessions extends Component {
 
   render() {
     const { openSnack } = this.state;
-    const { classes } = this.props;
     return (
       <div className="adminSessions__container">
         <div className="sessionsList">
           <Fab
             color="primary"
-            classes={{ root: classes.root }}
+            className="addSession__button"
             onClick={this.handleClickOpen}
           >
             <AddIcon />
@@ -271,5 +266,3 @@ class AdminSessions extends Component {
     );
   }
 }
-
-export default withStyles(styles)(AdminSessions);

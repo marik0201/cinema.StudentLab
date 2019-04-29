@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 
@@ -51,6 +52,12 @@ export default class UserTickets extends Component {
       });
   };
 
+  getDate = () => {
+    moment.locale('ru');
+    return `${moment(this.props.item.time).format('llll')}`;
+  };
+
+
   render() {
     const {
       status,
@@ -66,7 +73,7 @@ export default class UserTickets extends Component {
           <span>Фильм: </span> <span>{name}</span>
         </div>
         <div className="filmData">
-          <span>Дата: </span> <span>{time}</span>
+          <span>Дата: </span> <span>{this.getDate()}</span>
         </div>
         <div className="statusFilm">
           <span>Статус: </span> <span>{status}</span>
