@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import UserService from '../../Service/UserService.js';
 import AdminUsersCard from '../AdminUsersCard/AdminUsersCard';
 import style from './style.scss';

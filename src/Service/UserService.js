@@ -5,6 +5,7 @@ UserService.login = (token, userName, isAdmin) => {
   localStorage.setItem('userName', userName);
   localStorage.setItem('isAdmin', isAdmin);
 };
+
 UserService.logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('userName');

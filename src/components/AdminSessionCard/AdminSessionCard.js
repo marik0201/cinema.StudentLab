@@ -7,13 +7,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {
-  MuiPickersUtilsProvider,
-  TimePicker,
-  DatePicker
-} from 'material-ui-pickers';
 import Snackbar from '@material-ui/core/Snackbar';
-import history from '../../history';
+
 import UserService from '../../Service/UserService.js';
 import './style.scss';
 

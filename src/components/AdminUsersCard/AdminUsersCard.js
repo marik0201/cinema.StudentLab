@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+
 import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
@@ -35,9 +36,7 @@ export default class AdminUsersCard extends Component {
   changeRole = () => {
     axios
       .post(
-        `http://localhost:3000/api/admin/users/changerole/${
-          this.props.item._id
-        }`,
+        `http://localhost:3000/api/admin/users/changerole/${this.props.item._id}`,
         {},
         {
           headers: {

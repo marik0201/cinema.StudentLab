@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import CinemasPage from '../CinemasPage/CinemasPage';
 import UserPage from '../UserPage/UserPage';
 import EditCinema from '../EditCinema/EditCinema';

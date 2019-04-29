@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
+
 import LogIn from '../LogIn/LogIn';
 import SignUp from '../SignUp/SignUp';
 import './style.scss';
