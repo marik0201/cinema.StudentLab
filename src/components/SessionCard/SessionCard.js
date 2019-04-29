@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -41,13 +42,8 @@ export default class SessionCard extends Component {
   };
 
   getDate = () => {
-    const fullDate = new Date(this.props.item.time);
-    const year = fullDate.getFullYear();
-    const month = fullDate.getMonth();
-    const date = fullDate.getDate();
-    const hours = fullDate.getHours();
-    const minutes = fullDate.getMinutes();
-    return `${year}-${month}-${date} ${hours}:${minutes}`;
+    moment.locale('ru');
+    return `${moment(this.props.item.time).format('llll')}`;
   };
 
   orderTicket = () => {

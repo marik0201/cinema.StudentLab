@@ -11,13 +11,22 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import { withStyles } from '@material-ui/core/styles';
 
 import AdminSessionCard from '../AdminSessionCard/AdminSessionCard';
 import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
 const filmNames = [];
-export default class AdminSessions extends Component {
+const styles = {
+  root: {
+    background: '#eb1c23',
+    position: 'absolute',
+    left: '10px'
+  }
+};
+
+class AdminSessions extends Component {
   state = {
     sessions: [],
     snackMessage: '',
@@ -82,12 +91,55 @@ export default class AdminSessions extends Component {
       )
       .then(() => {
         this.snack('Сеанс добавлен');
-        this.setState({ open: false });
         this.getSessions();
+        this.setState({ open: false });
       })
       .catch(err => {
         this.snack('Не удалось добавить');
         this.setState({ open: false });
+      });
+  };
+
+  onSessionEdit = (cinema, time, sessionId) => {
+    if (cinema && time) {
+      axios
+        .put(
+          `http://localhost:3000/api/admin/sessions/${sessionId}`,
+          { time, cinema },
+          {
+            headers: {
+              Authorization: 'JWT ' + UserService.getToken(),
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then(() => {
+          this.snack('Сеанс изменен');
+          this.setState({ open: false });
+          this.getSessions();
+        })
+        .catch(err => {
+          this.snack('Не удалось изменить');
+        });
+    } else {
+      this.snack('Заполните поля');
+    }
+  };
+
+  onSessionDelete = sessionId => {
+    axios
+      .delete(`http://localhost:3000/api/admin/sessions/${sessionId}`, {
+        headers: {
+          Authorization: 'JWT ' + UserService.getToken(),
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(() => {
+        this.snack('Сеанс удален');
+        this.getSessions();
+      })
+      .catch(err => {
+        this.snack('Не удалось удалить');
       });
   };
 
@@ -106,6 +158,7 @@ export default class AdminSessions extends Component {
       })
       .catch(() => {
         this.setState({
+          open: false,
           errorMessage: 'Ошибка сервера'
         });
       });
@@ -128,12 +181,13 @@ export default class AdminSessions extends Component {
 
   render() {
     const { openSnack } = this.state;
+    const { classes } = this.props;
     return (
       <div className="adminSessions__container">
         <div className="sessionsList">
           <Fab
             color="primary"
-            className="addSession__button"
+            classes={{ root: classes.root }}
             onClick={this.handleClickOpen}
           >
             <AddIcon />
@@ -142,7 +196,8 @@ export default class AdminSessions extends Component {
             <AdminSessionCard
               item={item}
               snackbar={this.snack}
-              getSessions={this.getSessions}
+              onSessionEdit={this.onSessionEdit}
+              onSessionDelete={this.onSessionDelete}
               key={item._id}
             />
           ))}
@@ -216,3 +271,5 @@ export default class AdminSessions extends Component {
     );
   }
 }
+
+export default withStyles(styles)(AdminSessions);

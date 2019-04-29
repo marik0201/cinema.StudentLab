@@ -10,12 +10,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import AdminFilmCard from '../AdminFilmCard/AdminFilmCard';
 import UserService from '../../Service/UserService.js';
 import style from './style.scss';
 
-export default class AdminFilms extends Component {
+const styles = {
+  root: {
+    background: '#eb1c23',
+    position: 'absolute',
+    left: '10px'
+  }
+};
+
+class AdminFilms extends Component {
   state = {
     films: [],
     snackMessage: '',
@@ -92,12 +101,13 @@ export default class AdminFilms extends Component {
 
   render() {
     const { openSnack } = this.state;
+    const { classes } = this.props;
     return (
       <div className="adminFilms__container">
         <div className="filmsList">
           <Fab
             color="primary"
-            className="addFilm__button"
+            classes = {{ root: classes.root }}
             onClick={this.handleClickOpen}
           >
             <AddIcon />
@@ -155,3 +165,6 @@ export default class AdminFilms extends Component {
     );
   }
 }
+
+
+export default withStyles(styles)(AdminFilms);

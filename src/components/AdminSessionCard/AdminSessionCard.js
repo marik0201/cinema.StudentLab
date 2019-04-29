@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,11 +9,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/core/styles';
 
 import UserService from '../../Service/UserService.js';
 import './style.scss';
 
-export default class AdminSessionCard extends Component {
+const styles = {
+  root: {
+    width: '80%',
+    margin: '2% auto' 
+  }
+};
+
+class AdminSessionCard extends Component {
   state = {
     open: false,
     openSnack: false,
@@ -38,65 +47,23 @@ export default class AdminSessionCard extends Component {
   };
 
   getDate = () => {
-    const fullDate = new Date(this.props.item.time);
-    const year = fullDate.getFullYear();
-    const month = fullDate.getMonth();
-    const date = fullDate.getDate();
-    const hours = fullDate.getHours();
-    const minutes = fullDate.getMinutes();
-    return `${year}-${month}-${date} ${hours}:${minutes}`;
+    moment.locale('ru');
+    return `${moment(this.props.item.time).format('llll')}`;
   };
 
   editSession = () => {
     const { cinema, time } = this.state;
-
-    if (cinema && time) {
-      axios
-        .put(
-          `http://localhost:3000/api/admin/sessions/${this.props.item._id}`,
-          { time, cinema },
-          {
-            headers: {
-              Authorization: 'JWT ' + UserService.getToken(),
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then(() => {
-          this.props.snackbar('Сеанс изменен');
-          this.setState({ open: false });
-          this.props.getSessions();
-        })
-        .catch(err => {
-          this.props.snackbar('Не удалось изменить');
-        });
-    } else {
-      this.props.snackbar('Заполните поля');
-    }
+    this.props.onSessionEdit(cinema,time, this.props.item._id);
+    
   };
 
   deleteSession = () => {
-    axios
-      .delete(
-        `http://localhost:3000/api/admin/sessions/${this.props.item._id}`,
-        {
-          headers: {
-            Authorization: 'JWT ' + UserService.getToken(),
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      .then(() => {
-        this.props.snackbar('Сеанс удален');
-        this.props.getSessions();
-      })
-      .catch(err => {
-        this.props.snackbar('Не удалось удалить');
-      });
+    this.props.onSessionDelete(this.props.item._id)
   };
 
   render() {
     const { openSnack } = this.state;
+    const { classes } = this.props;
     return (
       <div className="session__card">
         <div className="session__info">
@@ -113,14 +80,14 @@ export default class AdminSessionCard extends Component {
         </div>
         <Button
           variant="contained"
-          className="sessionCard__button"
+          classes = {{ root: classes.root }}
           onClick={this.handleClickOpen}
         >
           Изменить сеанс
         </Button>
         <Button
           variant="contained"
-          className="sessionCard__button"
+          classes = {{ root: classes.root }}
           onClick={this.deleteSession}
         >
           Удалить сеанс
@@ -143,13 +110,9 @@ export default class AdminSessionCard extends Component {
             />
             <TextField
               id="datetime-local"
-              label="Next appointment"
               type="datetime-local"
-              defaultValue={this.state.time}
+              value={this.state.time}
               onChange={this.handleChange('time')}
-              InputLabelProps={{
-                shrink: true
-              }}
             />
           </DialogContent>
           <DialogActions>
@@ -171,3 +134,5 @@ export default class AdminSessionCard extends Component {
     );
   }
 }
+
+export default withStyles(styles)(AdminSessionCard);

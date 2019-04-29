@@ -19,6 +19,7 @@
     "babel-polyfill": "^6.26.0",
     "history": "^4.9.0",
     "material-ui-pickers": "^2.2.4",
+    "moment": "^2.24.0",
     "postcss-loader": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
