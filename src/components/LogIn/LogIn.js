@@ -55,6 +55,8 @@ export default class LogIn extends Component {
           value={this.state.login}
           onChange={this.handleChange('login')}
           fullWidth
+          autoFocus={true}
+          required
         />
         <br />
         <TextField
@@ -65,6 +67,7 @@ export default class LogIn extends Component {
           value={this.state.password}
           onChange={this.handleChange('password')}
           fullWidth
+          required
         />
         <div className="form__button__container">
           <Button variant="contained" onClick={this.loginSubmit}>
