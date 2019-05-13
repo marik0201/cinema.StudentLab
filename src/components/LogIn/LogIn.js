@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
 
 import UserService from '../../Service/UserService.js';
-import history from '../../history';
+import { logIn } from '../../actions/user'
 
-export default class LogIn extends Component {
+class LogIn extends Component {
   state = {
     login: '',
     password: ''
@@ -16,22 +17,24 @@ export default class LogIn extends Component {
     const { login, password } = this.state;
 
     login && password
-      ? axios
-          .post('http://localhost:3000/api/auth/login', {
-            login,
-            password
-          })
-          .then(res => {
-            UserService.login(res.data.token, res.data.userName, res.data.isAdmin);
-            history.push('/');
-          })
-          .catch(res => {
-            this.setState({
-              login: '',
-              password: ''
-            });
-            this.props.snackbar('Неверный логин или пароль');
-          })
+      ? 
+      // axios
+          // .post('http://localhost:3000/api/auth/login', {
+          //   login,
+          //   password
+          // })
+          // .then(res => {
+          //   UserService.login(res.data.token, res.data.userName, res.data.isAdmin);
+          //   history.push('/');
+          // })
+          // .catch(res => {
+          //   this.setState({
+          //     login: '',
+          //     password: ''
+          //   });
+          //   this.props.snackbar('Неверный логин или пароль');
+          // })
+      this.props.login(login, password)
       : this.props.snackbar('Заполните поля');
     this.setState({
       login: '',
@@ -82,3 +85,9 @@ export default class LogIn extends Component {
     );
   }
 }
+
+export default connect(state =>({}), dispatch => ({
+  login: (login, password) => {
+    dispatch(logIn(login,password));
+  }
+}))(LogIn)
