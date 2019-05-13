@@ -73,9 +73,10 @@ export default class LogIn extends Component {
           <Button variant="contained" onClick={this.loginSubmit}>
             Войти
           </Button>
-          <Button variant="contained" onClick={this.props.action}>
-            Регистрация
-          </Button>
+          <br/>
+          <a onClick={this.props.action}>
+            Зарегистрироваться
+          </a>
         </div>
       </form>
     );

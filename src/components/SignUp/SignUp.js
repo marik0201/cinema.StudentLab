@@ -26,13 +26,31 @@ export default class SignUp extends Component {
   loginSubmit = () => {
     const { name, login, password, repeatPasswod } = this.state;
     if (!name || !login || !password || !repeatPasswod) {
-      this.props.snackbar('Заполните все поля'),
+      this.props.snackbar('Заполните все поля');
+      if (!name) {
         this.setState({
-          name: '',
-          login: '',
-          password: '',
-          repeatPasswod: ''
-        });
+          isNameError: true,
+          nameValidationError: 'Заполните поле'
+        })
+      }
+      if (!login) {
+        this.setState({
+          isLoginError: true,
+          loginValidationError: 'Заполните поле'
+        })
+      }
+      if (!password) {
+        this.setState({
+          isPasswordError: true,
+          passwordValidationError: 'Заполните поле'
+        })
+      }
+      if (!repeatPasswod) {
+        this.setState({
+          isRepeatpasswordError: true,
+          repeatpasswordValidationError: 'Заполните поле'
+        })
+      }
     } else if (password !== repeatPasswod) {
       this.props.snackbar('Пароли не совпадают'),
         this.setState({
@@ -110,13 +128,13 @@ export default class SignUp extends Component {
   validateRepeatpassword = e => {
     this.state.password === e.target.value || e.target.value === ''
       ? this.setState({
-          isRepeatpasswordError: false,
-          repeatpasswordValidationError: ''
-        })
+        isRepeatpasswordError: false,
+        repeatpasswordValidationError: ''
+      })
       : this.setState({
-          isRepeatpasswordError: true,
-          repeatpasswordValidationError: 'Пароли не совпадают'
-        });
+        isRepeatpasswordError: true,
+        repeatpasswordValidationError: 'Пароли не совпадают'
+      });
   };
 
   validatePassword = e => {
@@ -191,12 +209,12 @@ export default class SignUp extends Component {
         />
         <div className="form__button__container">
           <Button variant="contained" onClick={this.loginSubmit}>
-            Зарегестрироваться
+            Зарегистрироваться
           </Button>
           <br />
-          <Button variant="contained" onClick={this.props.action}>
-            Войти
-          </Button>
+          <a onClick={this.props.action}>
+            Войти в аккаунт
+          </a>
         </div>
       </form>
     );
