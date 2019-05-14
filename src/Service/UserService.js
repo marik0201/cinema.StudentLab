@@ -20,6 +20,14 @@ UserService.setNewName = (newName) => {
   localStorage.setItem('userName', newName);
 }
 
+UserService.getUser = () => {
+   return user = {
+    token: localStorage.getItem('token'),
+    userName: localStorage.getItem('userName'),
+    isAdmin: localStorage.getItem('isAdmin')
+  }
+}
+
 UserService.getToken = () => {
   return localStorage.getItem('token');
 }

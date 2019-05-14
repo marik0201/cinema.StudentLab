@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { connect } from 'react-redux';
 
 import UserService from '../../Service/UserService.js';
+import { logout } from '../../actions/user'
 import style from './style.scss';
 
-export default class Header extends Component {
+class Header extends Component {
   state = {
     isAdmin: UserService.isAdmin(),
     logIn: UserService.isLoggedIn(),
@@ -25,7 +27,7 @@ export default class Header extends Component {
 
   logOut = () => {
     this.setState({ menuAnchor: null });
-    UserService.logout();
+    this.props.onLogout();
   };
 
   componentDidUpdate = prevProps => {
@@ -94,3 +96,11 @@ export default class Header extends Component {
     );
   }
 }
+
+export default connect(state =>({
+  state
+}), dispatch => ({
+  onLogout: (login, password) => {
+    dispatch(logout());
+  }
+}))(Header)

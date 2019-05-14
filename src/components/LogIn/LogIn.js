@@ -5,9 +5,17 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 
 import UserService from '../../Service/UserService.js';
-import { logIn } from '../../actions/user'
+import history from '../../history';
+import { logIn, clearError } from '../../actions/user';
 
 class LogIn extends Component {
+  constructor(props) {
+    super(props);
+    history.listen(() => {
+      this.props.clearError();
+    });
+  }
+
   state = {
     login: '',
     password: ''
@@ -15,26 +23,8 @@ class LogIn extends Component {
 
   loginSubmit = () => {
     const { login, password } = this.state;
-
     login && password
-      ? 
-      // axios
-          // .post('http://localhost:3000/api/auth/login', {
-          //   login,
-          //   password
-          // })
-          // .then(res => {
-          //   UserService.login(res.data.token, res.data.userName, res.data.isAdmin);
-          //   history.push('/');
-          // })
-          // .catch(res => {
-          //   this.setState({
-          //     login: '',
-          //     password: ''
-          //   });
-          //   this.props.snackbar('Неверный логин или пароль');
-          // })
-      this.props.login(login, password)
+      ? this.props.login(login, password)
       : this.props.snackbar('Заполните поля');
     this.setState({
       login: '',
@@ -47,6 +37,7 @@ class LogIn extends Component {
   };
 
   render() {
+    const isLoginFailed = this.props.state.users.isLoginFailed;
     return (
       <form className="center">
         <h2>Вход</h2>
@@ -76,18 +67,25 @@ class LogIn extends Component {
           <Button variant="contained" onClick={this.loginSubmit}>
             Войти
           </Button>
-          <br/>
-          <a onClick={this.props.action}>
-            Зарегистрироваться
-          </a>
+          <br />
+          <a onClick={this.props.action}>Зарегистрироваться</a>
+          {isLoginFailed && <span className="errorSpan">Неверный логин или пароль</span>}
         </div>
       </form>
     );
   }
 }
 
-export default connect(state =>({}), dispatch => ({
-  login: (login, password) => {
-    dispatch(logIn(login,password));
-  }
-}))(LogIn)
+export default connect(
+  state => ({
+    state
+  }),
+  dispatch => ({
+    login: (login, password) => {
+      dispatch(logIn(login, password));
+    },
+    clearError: () => {
+      dispatch(clearError());
+    }
+  })
+)(LogIn);
