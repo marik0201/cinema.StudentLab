@@ -1,12 +1,13 @@
 import types from '../types/user';
 import UserService from '../Service/UserService';
 
-
 const initialState = {
   isAuth: UserService.getToken() ? true : false,
   isAdmin: UserService.isAdmin(),
   userName: UserService.getUserName() || '',
-  isLoginFailed: false
+  isLoginFailed: false,
+  isRegisterSuccess: false,
+  errorRegisterMessage: ''
 };
 
 export function users(state = initialState, action) {
@@ -33,7 +34,14 @@ export function users(state = initialState, action) {
 
     case types.ON_REGISTER_SUCCESS:
       return {
-        ...state
+        ...state,
+        isRegisterSuccess: true
+      };
+
+    case types.ON_REGISTER_FAILED:
+      return {
+        ...state,
+        errorRegisterMessage: action.payload
       };
 
     case types.ON_LOGOUT:
@@ -41,7 +49,10 @@ export function users(state = initialState, action) {
       return { ...state, isAuth: false, userName: '', isAdmin: false };
 
     case types.CLEAR_ERROR:
-    return { ...state, isLoginFailed: false }
+      return { ...state, isLoginFailed: false, errorRegisterMessage: '' };
+
+    case types.CLEAR_MESSAGE:
+      return { ...state, isRegisterSuccess: false };
 
     default:
       return state;

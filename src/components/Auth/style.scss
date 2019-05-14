@@ -35,8 +35,14 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
     .errorSpan {
       color: #f00;
+      position: absolute;
+      bottom: -20px
+    }
+    
+    .successMessage {
       position: absolute;
       bottom: -20px
     }
