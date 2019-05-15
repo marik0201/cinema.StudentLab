@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-export default class SignUp extends Component {
+import history from '../../history';
+import { signup, clearError, clearMessage } from '../../actions/user';
+
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    history.listen(() => {
+      this.props.clearError();
+      this.props.clearMessage();
+    });
+  }
+
   state = {
     name: '',
     login: '',
@@ -31,25 +43,25 @@ export default class SignUp extends Component {
         this.setState({
           isNameError: true,
           nameValidationError: 'Заполните поле'
-        })
+        });
       }
       if (!login) {
         this.setState({
           isLoginError: true,
           loginValidationError: 'Заполните поле'
-        })
+        });
       }
       if (!password) {
         this.setState({
           isPasswordError: true,
           passwordValidationError: 'Заполните поле'
-        })
+        });
       }
       if (!repeatPasswod) {
         this.setState({
           isRepeatpasswordError: true,
           repeatpasswordValidationError: 'Заполните поле'
-        })
+        });
       }
     } else if (password !== repeatPasswod) {
       this.props.snackbar('Пароли не совпадают'),
@@ -58,29 +70,17 @@ export default class SignUp extends Component {
           repeatPasswod: ''
         });
     } else {
-      axios
-        .post('http://localhost:3000/api/auth/signup', {
-          name,
-          login,
-          password
-        })
-        .then(res => {
-          this.props.snackbar(
-            'Вы зарегестрированы. Теперь можете войти на сайт'
-          );
-          this.setState({
-            name: '',
-            login: '',
-            password: '',
-            repeatPasswod: ''
-          });
-          this.props.action();
-        })
-        .catch(err => {
-          err.response.data.errorMessages
-            ? this.props.snackbar(err.response.data.errorMessages.join('; '))
-            : this.props.snackbar(err.response.data.message);
-        });
+      this.props.register(name, login, password);
+
+      this.setState({
+        name: '',
+        login: '',
+        password: '',
+        repeatPasswod: ''
+      });
+
+      this.props.clearError();
+      this.props.clearMessage();
     }
   };
 
@@ -128,13 +128,13 @@ export default class SignUp extends Component {
   validateRepeatpassword = e => {
     this.state.password === e.target.value || e.target.value === ''
       ? this.setState({
-        isRepeatpasswordError: false,
-        repeatpasswordValidationError: ''
-      })
+          isRepeatpasswordError: false,
+          repeatpasswordValidationError: ''
+        })
       : this.setState({
-        isRepeatpasswordError: true,
-        repeatpasswordValidationError: 'Пароли не совпадают'
-      });
+          isRepeatpasswordError: true,
+          repeatpasswordValidationError: 'Пароли не совпадают'
+        });
   };
 
   validatePassword = e => {
@@ -155,6 +155,7 @@ export default class SignUp extends Component {
   };
 
   render() {
+    const { isRegisterSuccess, errorRegisterMessage } = this.props.state.users;
     return (
       <form className="center">
         <h2>Регистрация</h2>
@@ -212,11 +213,32 @@ export default class SignUp extends Component {
             Зарегистрироваться
           </Button>
           <br />
-          <a onClick={this.props.action}>
-            Войти в аккаунт
-          </a>
+          <a onClick={this.props.action}>Войти в аккаунт</a>
+          {isRegisterSuccess && (
+            <span className="successMessage">Вы успешно зарегестрированы</span>
+          )}
+          {errorRegisterMessage && (
+            <span className="errorSpan">{errorRegisterMessage}</span>
+          )}
         </div>
       </form>
     );
   }
 }
+
+export default connect(
+  state => ({
+    state
+  }),
+  dispatch => ({
+    register: (name, login, password) => {
+      dispatch(signup(name, login, password));
+    },
+    clearError: () => {
+      dispatch(clearError());
+    },
+    clearMessage: () => {
+      dispatch(clearMessage());
+    }
+  })
+)(SignUp);

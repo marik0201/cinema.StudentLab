@@ -40,3 +40,9 @@
     width: auto;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .card {
+    width: 80%;
+  }
+}

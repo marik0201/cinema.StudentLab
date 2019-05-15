@@ -9,7 +9,7 @@ export default class Auth extends Component {
   state = {
     logIn: true,
     snackMessage: '',
-    openSnack: false,
+    openSnack: false
   };
 
   toggleForm = () => {
@@ -40,7 +40,7 @@ export default class Auth extends Component {
             <SignUp action={this.toggleForm} snackbar={this.openSnackbar} />
           )}
           <Snackbar
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center',}}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             open={openSnack}
             onClose={this.handleClose}
             message={<span>{this.state.snackMessage}</span>}
