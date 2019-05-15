@@ -33,21 +33,19 @@ export const registerFailed = payload => {
   return { type: types.ON_REGISTER_FAILED, payload };
 };
 
-export const logIn = (login, password) => {
-  return dispatch => {
-    return axios
-      .post('http://localhost:3000/api/auth/login', {
-        login,
-        password
-      })
-      .then(res => {
-        dispatch(loginSuccess(res.data));
-        history.push('/');
-      })
-      .catch(res => {
-        dispatch(loginFailed(res.data));
-      });
-  };
+export const logIn = (login, password) => dispatch => {
+  return axios
+    .post('http://localhost:3000/api/auth/login', {
+      login,
+      password
+    })
+    .then(res => {
+      dispatch(loginSuccess(res.data));
+      history.push('/');
+    })
+    .catch(res => {
+      dispatch(loginFailed(res.data));
+    });
 };
 
 export const signup = (name, login, password) => dispatch => {

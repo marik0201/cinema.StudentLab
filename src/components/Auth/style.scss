@@ -10,17 +10,17 @@
   border-radius: 4px;
   padding: 2%;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-              0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-              0px 2px 1px -1px rgba(0, 0, 0, 0.12); 
+              0px 1px 1px 0px rgba(0, 0, 0, 0.14), 
+              0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   width: 20vw;
 
   h2 {
-      margin-left: 0;
+    margin-left: 0;
   }
 
   button {
-      margin-top: 20px;
-      width:70%;
+    margin-top: 20px;
+    width: 70%;
   }
   a {
     color: #8f8f8f;
@@ -30,22 +30,22 @@
 }
 
 .form__button__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
-    .errorSpan {
-      color: #f00;
-      position: absolute;
-      bottom: -20px
-    }
-    
-    .successMessage {
-      position: absolute;
-      bottom: -20px
-    }
+  .errorSpan {
+    color: #f00;
+    position: absolute;
+    bottom: -20px;
+  }
+
+  .successMessage {
+    position: absolute;
+    bottom: -20px;
+  }
 }
 
 #name-helper-text {
@@ -73,4 +73,3 @@
     width: 50vw;
   }
 }
-

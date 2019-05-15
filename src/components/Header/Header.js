@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'react-redux';
 
 import UserService from '../../Service/UserService.js';
-import { logout } from '../../actions/user'
+import { logout } from '../../actions/user';
 import style from './style.scss';
 
 class Header extends Component {
@@ -97,10 +97,13 @@ class Header extends Component {
   }
 }
 
-export default connect(state =>({
-  state
-}), dispatch => ({
-  onLogout: (login, password) => {
-    dispatch(logout());
-  }
-}))(Header)
+export default connect(
+  state => ({
+    state
+  }),
+  dispatch => ({
+    onLogout: () => {
+      dispatch(logout());
+    }
+  })
+)(Header);
