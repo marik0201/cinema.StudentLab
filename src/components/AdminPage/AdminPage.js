@@ -36,6 +36,7 @@ export default class AdminPage extends Component {
         {value === 0 && <AdminUsers />}
         {value === 1 && <AdminFilms />}
         {value === 2 && <AdminSessions />}
+        {/* {value === 3 && <AdminRooms/>} */}
       </>
     );
   }

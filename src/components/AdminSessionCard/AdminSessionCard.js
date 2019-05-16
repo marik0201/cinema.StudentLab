@@ -62,7 +62,7 @@ export default class AdminSessionCard extends Component {
         </div>
         <div className="session__info">
           <span>Кинотеатр: </span>
-          {this.props.item.cinema}
+          {this.props.item.cinemaId.name}
         </div>
         <div className="session__info">
           <span>Свободных мест: </span>
