@@ -14,7 +14,9 @@ export default class Cinemas extends Component {
     axios.get('http://localhost:3000/api/films').then(res => {
       this.setState({
         items: res.data.result
-      });      
+      });   
+      console.log(this.state.items);
+         
     }).catch( () => {
       this.setState({
         errorMessage: 'Ошибка сервера'

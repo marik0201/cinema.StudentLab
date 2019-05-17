@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import AdminUsers from '../AdminUsers/AdminUsers';
+import AdminRooms from '../AdminRooms/AdminRooms';
 import AdminFilms from '../AdminFilms/AdminFilms';
 import AdminSessions from '../AdminSessions/AdminSessions';
 
@@ -12,7 +13,7 @@ export default class AdminPage extends Component {
     value: 0
   };
 
-  handleChange = (event, value) => {
+  handleChange = (event,value) => {
     this.setState({ value });
   };
 
@@ -31,12 +32,13 @@ export default class AdminPage extends Component {
             <Tab label="Пользователи" />
             <Tab label="Фильмы" />
             <Tab label="Сеансы" />
+            <Tab label="Залы" />
           </Tabs>
         </Paper>
         {value === 0 && <AdminUsers />}
         {value === 1 && <AdminFilms />}
         {value === 2 && <AdminSessions />}
-        {/* {value === 3 && <AdminRooms/>} */}
+        {value === 3 && <AdminRooms/>}
       </>
     );
   }
