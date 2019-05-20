@@ -11,14 +11,13 @@ export default class CinemaNames extends Component {
 
   componentDidMount = () => {
       console.log(this.props.cinemas);
-      
   }
   render() {
     return (
       <div className="cinemaNames__card">
-        {this.props.cinemas.map(item => {
-          <Button variant="contained">{item.name}</Button>;
-        })}
+        {this.props.cinemas.map(item => (
+          <Button key={item._id}>{item.name}</Button>
+        ))}
       </div>
     );
   }

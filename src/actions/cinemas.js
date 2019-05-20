@@ -8,8 +8,6 @@ export const cinemasLoadedSuccess = payload => {
 export const getCinemas = () => async dispatch => {
     try {
         const cinemas = await axios.get('http://localhost:3000/api/cinemas')
-        console.log(cinemas.data.cinemas);
-        
         dispatch(cinemasLoadedSuccess(cinemas.data.cinemas))
     } catch (e) {
         
